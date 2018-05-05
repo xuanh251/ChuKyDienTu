@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            this.barManager1 = new DevExpress.XtraBars.BarManager();
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.BtnTaoCapKhoa = new DevExpress.XtraBars.BarLargeButtonItem();
             this.BtnKyVanBan = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -42,10 +43,10 @@
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.skinBarSubItem1 = new DevExpress.XtraBars.SkinBarSubItem();
             this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel();
-            this.xtraTabbedMdiManager1 = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager();
+            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.xtraTabbedMdiManagerMain = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManagerMain)).BeginInit();
             this.SuspendLayout();
             // 
             // barManager1
@@ -118,6 +119,7 @@
             this.BtnNhomThucHien.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("BtnNhomThucHien.ImageOptions.Image")));
             this.BtnNhomThucHien.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("BtnNhomThucHien.ImageOptions.LargeImage")));
             this.BtnNhomThucHien.Name = "BtnNhomThucHien";
+            this.BtnNhomThucHien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnNhomThucHien_ItemClick);
             // 
             // bar3
             // 
@@ -184,9 +186,12 @@
             this.defaultLookAndFeel1.EnableBonusSkins = true;
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "Visual Studio 2013 Blue";
             // 
-            // xtraTabbedMdiManager1
+            // xtraTabbedMdiManagerMain
             // 
-            this.xtraTabbedMdiManager1.MdiParent = this;
+            this.xtraTabbedMdiManagerMain.HeaderButtons = ((DevExpress.XtraTab.TabButtons)((DevExpress.XtraTab.TabButtons.Close | DevExpress.XtraTab.TabButtons.Default)));
+            this.xtraTabbedMdiManagerMain.HeaderButtonsShowMode = DevExpress.XtraTab.TabButtonShowMode.Always;
+            this.xtraTabbedMdiManagerMain.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Bottom;
+            this.xtraTabbedMdiManagerMain.MdiParent = this;
             // 
             // FrmMain
             // 
@@ -203,7 +208,7 @@
     "in";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManagerMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -225,6 +230,6 @@
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
         private DevExpress.XtraBars.SkinBarSubItem skinBarSubItem1;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem5;
-        private DevExpress.XtraTabbedMdi.XtraTabbedMdiManager xtraTabbedMdiManager1;
+        private DevExpress.XtraTabbedMdi.XtraTabbedMdiManager xtraTabbedMdiManagerMain;
     }
 }

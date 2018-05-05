@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
 
 namespace ChuKyDienTu
 {
@@ -18,6 +9,7 @@ namespace ChuKyDienTu
             InitializeComponent();
             TaoSNT();
         }
+
         private long sntngaunhien()
         {
             Random random = new Random();
@@ -28,6 +20,7 @@ namespace ChuKyDienTu
             }
             return k;
         }
+
         public bool ktnt(long k)
         {
             if (k < 2L)
@@ -43,6 +36,7 @@ namespace ChuKyDienTu
             }
             return true;
         }
+
         public long max(long a, long b)
         {
             if (a >= b)
@@ -51,6 +45,7 @@ namespace ChuKyDienTu
             }
             return b;
         }
+
         public long nd(long a, long b)
         {
             long num2 = 1L;
@@ -60,6 +55,7 @@ namespace ChuKyDienTu
             }
             return (((num2 * b) + 1L) / a);
         }
+
         public long ucln(long a, long b)
         {
             while (b != 0L)
@@ -70,10 +66,12 @@ namespace ChuKyDienTu
             }
             return a;
         }
+
         private void btnTaoSNT_Click(object sender, EventArgs e)
         {
             TaoSNT();
         }
+
         private void TaoSNT()
         {
             long num = sntngaunhien();
@@ -85,9 +83,11 @@ namespace ChuKyDienTu
             txtSNT1.Text = Convert.ToString(num);
             txtSNT2.Text = Convert.ToString(num2);
         }
-        long N = 0L;
-        long E = 0L;
-        long D = 0L;
+
+        private long N = 0L;
+        private long E = 0L;
+        private long D = 0L;
+
         private void BtnTaoKhoa_Click(object sender, EventArgs e)
         {
             long snt1 = Convert.ToInt64(txtSNT1.Text);
@@ -120,5 +120,4 @@ namespace ChuKyDienTu
             Program.bienp = txtSNT2.Text;
         }
     }
-    
 }

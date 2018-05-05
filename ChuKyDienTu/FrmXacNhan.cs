@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraRichEdit;
 using Microsoft.Office.Interop.Word;
+using System;
 using System.Reflection;
-using DevExpress.XtraRichEdit;
 using System.Security.Cryptography;
-using System.IO;
+using System.Text;
+using System.Windows.Forms;
 
 namespace ChuKyDienTu
 {
@@ -26,12 +18,12 @@ namespace ChuKyDienTu
         private string fname = "";
         private OpenFileDialog ofd1 = new OpenFileDialog();
         private OpenFileDialog ofd = new OpenFileDialog();
+
         public FrmXacNhan()
         {
             InitializeComponent();
             textEditN.Text = Program.bienN;
             textEditE.Text = Program.bienE;
-           
         }
 
         private void BtnTaiVanBan_Click(object sender, EventArgs e)
@@ -39,17 +31,18 @@ namespace ChuKyDienTu
             richEditControlVanBan.Modified = false;
             Openfile();
         }
+
         private void Openfile()
         {
             ofd.Multiselect = false;
-            ofd.Filter = "Word 2003 Document (*.doc)|*.doc|Word Document (*.docx)|*.docx|Document files (*.txt)|*.txt|Rich text files (*.rtf)|*.rtf";
+            ofd.Filter = "Word Document (*.doc)|*.doc|Document files (*.txt)|*.txt|Rich text files (*.rtf)|*.rtf";
             ofd.FilterIndex = 1;
             ofd.FileName = string.Empty;
             if ((ofd.ShowDialog() != DialogResult.Cancel) && (ofd.FileName != ""))
             {
                 if (ofd.FilterIndex == 2)
                 {
-                    richEditControlVanBan.LoadDocumentTemplate(ofd.FileName, DocumentFormat.Undefined);
+                    richEditControlVanBan.LoadDocument(ofd.FileName, DocumentFormat.PlainText);
                 }
                 else if (ofd.FilterIndex == 1)
                 {
@@ -65,7 +58,7 @@ namespace ChuKyDienTu
                 }
                 else if (ofd.FilterIndex == 3)
                 {
-                    richEditControlVanBan.LoadDocumentTemplate(ofd.FileName, DocumentFormat.Undefined);
+                    richEditControlVanBan.LoadDocument(ofd.FileName, DocumentFormat.PlainText);
                 }
                 fname = ofd.FileName;
                 richEditControlVanBan.Modified = false;
@@ -78,6 +71,7 @@ namespace ChuKyDienTu
             richTextBoxChuKy.ReadOnly = true;
             Openfilexn();
         }
+
         private void Openfilexn()
         {
             ofd1.Multiselect = false;
@@ -92,6 +86,7 @@ namespace ChuKyDienTu
                 Text = "Doc Crypto : " + ofd1.FileName;
             }
         }
+
         public static long tinh1(long b, long e, long n)
         {
             long num = b % n;
@@ -101,6 +96,7 @@ namespace ChuKyDienTu
             }
             return num;
         }
+
         public static string BamSHA(string mess)
         {
             SHA256Managed managed = new SHA256Managed();
@@ -113,6 +109,7 @@ namespace ChuKyDienTu
             }
             return builder.ToString().ToUpper();
         }
+
         private void BtnXacNhan_Click(object sender, EventArgs e)
         {
             try
