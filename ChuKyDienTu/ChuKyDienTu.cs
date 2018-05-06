@@ -4,11 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ChuKyDienTu
 {
     public class ChuKyDienTu
     {
+       
+        public void SaveKey(object obj, string fileName)
+        {
+            XmlSerializer sr = new XmlSerializer(obj.GetType());
+
+            TextWriter textWriter = new StreamWriter(fileName);
+            sr.Serialize(textWriter, obj);
+            textWriter.Close();
+        }
+        
         public long sntngaunhien()
         {
             Random random = new Random();

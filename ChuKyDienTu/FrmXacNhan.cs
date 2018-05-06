@@ -1,10 +1,13 @@
-﻿using DevExpress.XtraRichEdit;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraRichEdit;
 using Microsoft.Office.Interop.Word;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ChuKyDienTu
 {
@@ -160,32 +163,59 @@ namespace ChuKyDienTu
                         progressBar.Value = 100;
                         if (bantomluoc1 != bantomluoc2)
                         {
-                            MessageBox.Show("Chữ ký không đúng hoặc văn bản không toàn vẹn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                            XtraMessageBox.Show("Chữ ký không đúng hoặc văn bản không toàn vẹn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                         }
                         else
                         {
-                            MessageBox.Show("Xác thực chữ ký thành công!", "Thông báo");
+                            XtraMessageBox.Show("Xác thực chữ ký thành công!", "Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Chữ ký xác nhận không được rỗng", "Thông báo");
+                        XtraMessageBox.Show("Chữ ký xác nhận không được rỗng", "Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Nhập khoá công khai E, N để xác nhận", "Thông báo");
+                    XtraMessageBox.Show("Nhập khoá công khai E, N để xác nhận", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch
             {
-                MessageBox.Show("Chữ ký sai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                XtraMessageBox.Show("Chữ ký sai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }
         private void BtnLamMoi_Click(object sender, EventArgs e)
         {
             richEditControlVanBan.ResetText();
             richTextBoxChuKy.ResetText();
+        }
+
+        private void BtnNapKhoa_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Khoá công khai(*.puk)|*.puk"
+            };
+            string path = null;
+            if (ofd.ShowDialog() != DialogResult.Cancel)
+            {
+                try
+                {
+                    path = ofd.FileName;
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(KeyManager));
+                    FileStream read = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    KeyManager info = (KeyManager)xmlSerializer.Deserialize(read);
+                    textEditE.Text = info.BienE;
+                    textEditN.Text = info.BienN;
+                    Program.bienE = info.BienE;
+                    Program.bienN = info.BienN;
+                }
+                catch (Exception)
+                {
+                    XtraMessageBox.Show("Không tải được khoá", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

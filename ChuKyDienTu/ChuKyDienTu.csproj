@@ -95,6 +95,7 @@
     <Compile Include="FrmTaoKhoa.Designer.cs">
       <DependentUpon>FrmTaoKhoa.cs</DependentUpon>
     </Compile>
+    <Compile Include="KeyManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmXacNhan.resx">

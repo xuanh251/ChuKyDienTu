@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ChuKyDienTu
 {
@@ -9,11 +13,13 @@ namespace ChuKyDienTu
         {
             InitializeComponent();
             TaoSNT();
+            TaoKhoa();
         }
 
         private void btnTaoSNT_Click(object sender, EventArgs e)
         {
             TaoSNT();
+            TaoKhoa();
         }
 
         private void TaoSNT()
@@ -32,10 +38,65 @@ namespace ChuKyDienTu
         private long E = 0L;
         private long D = 0L;
 
-        private void BtnTaoKhoa_Click(object sender, EventArgs e)
+        private void BtnLuuKhoaBiMat_Click(object sender, EventArgs e)
         {
-            TaoKhoa();
+            LuuKhoaBaoMat();
         }
+        private void LuuKhoaBaoMat()
+        {
+            try
+            {
+                KeyManager keyManager = new KeyManager();
+                keyManager.BienD = txtD.Text;
+                keyManager.BienN = txtNBM.Text;
+                keyManager.BienQ = txtSNT1.Text;
+                keyManager.BienP = txtSNT2.Text;
+                string path = null;
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "Khoá bảo mật(*.pvk)|*.pvk"
+                };
+                if (dialog.ShowDialog()==DialogResult.OK)
+                {
+                    path = dialog.FileName;
+                    chuKyDienTu.SaveKey(keyManager, path);
+                }
+                XtraMessageBox.Show("Đã lưu khoá bảo mật", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception)
+            {
+                XtraMessageBox.Show("Đã xảy ra lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void BtnLuuKhoaCongKhai_Click(object sender, EventArgs e)
+        {
+            LuuKhoaCongKhai();
+        }
+        private void LuuKhoaCongKhai()
+        {
+            try
+            {
+                KeyManager keyManager = new KeyManager();
+                keyManager.BienE = txtE.Text;
+                keyManager.BienN = txtNCK.Text;
+                string path = null;
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "Khoá công khai(*.puk)|*.puk"
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    path = dialog.FileName;
+                    chuKyDienTu.SaveKey(keyManager, path);
+                }
+                XtraMessageBox.Show("Đã lưu khoá công khai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception)
+            {
+                XtraMessageBox.Show("Đã xảy ra lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void TaoKhoa()
         {
             long snt1 = Convert.ToInt64(txtSNT1.Text);
@@ -53,18 +114,9 @@ namespace ChuKyDienTu
             D = chuKyDienTu.nd(E, num3);
             txtE.Text = E.ToString();
             txtD.Text = D.ToString();
-            Program.bienD = this.D.ToString();
-            Program.bienE = this.E.ToString();
-            Program.bienN = this.N.ToString();
+            
         }
-        private void txtSNT1_EditValueChanged(object sender, EventArgs e)
-        {
-            Program.bienq = txtSNT1.Text;
-        }
-
-        private void txtSNT2_EditValueChanged(object sender, EventArgs e)
-        {
-            Program.bienp = txtSNT2.Text;
-        }
+       
+        
     }
 }

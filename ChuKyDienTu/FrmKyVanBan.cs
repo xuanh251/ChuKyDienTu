@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using System.Xml.Serialization;
 
 namespace ChuKyDienTu
 {
@@ -27,8 +28,8 @@ namespace ChuKyDienTu
         public FrmKyVanBan()
         {
             InitializeComponent();
-            textEditD.Text = Program.bienD;
-            textEditN.Text = Program.bienN;
+            //textEditD.Text = Program.bienD;
+            //textEditN.Text = Program.bienN;
         }
 
         private void BtnTaiVanBan_Click(object sender, EventArgs e)
@@ -195,6 +196,35 @@ namespace ChuKyDienTu
             memoEditChuKy.ResetText();
             textEditD.Text = Program.bienD;
             textEditN.Text = Program.bienN;
+        }
+
+        private void BtnNapKhoa_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Khoá bảo mật(*.pvk)|*.pvk"
+            };
+            string path = null;
+            if (ofd.ShowDialog() != DialogResult.Cancel)
+            {
+                try
+                {
+                    path = ofd.FileName;
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(KeyManager));
+                    FileStream read = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    KeyManager info = (KeyManager)xmlSerializer.Deserialize(read);
+                    textEditD.Text = info.BienD;
+                    textEditN.Text = info.BienN;
+                    Program.bienp = info.BienP;
+                    Program.bienq = info.BienQ;
+                    Program.bienD = info.BienD;
+                    Program.bienN = info.BienN;
+                }
+                catch (Exception)
+                {
+                    XtraMessageBox.Show("Không tải được khoá", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
