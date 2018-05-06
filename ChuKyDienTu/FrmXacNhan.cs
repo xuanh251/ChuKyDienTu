@@ -12,12 +12,12 @@ namespace ChuKyDienTu
     {
         public string bantomluoc1 = "";
         public string bantomluoc2 = "";
-        private long D = 0L;
         private long E = 0L;
         private long N = 0L;
         private string fname = "";
         private OpenFileDialog ofd1 = new OpenFileDialog();
         private OpenFileDialog ofd = new OpenFileDialog();
+        ChuKyDienTu chuKyDienTu = new ChuKyDienTu();
 
         public FrmXacNhan()
         {
@@ -87,7 +87,7 @@ namespace ChuKyDienTu
             }
         }
 
-        public static long tinh1(long b, long e, long n)
+        public static long tinh(long b, long e, long n)
         {
             long num = b % n;
             for (long i = 1L; i < e; i += 1L)
@@ -97,20 +97,11 @@ namespace ChuKyDienTu
             return num;
         }
 
-        public static string BamSHA(string mess)
-        {
-            SHA256Managed managed = new SHA256Managed();
-            byte[] bytes = Encoding.UTF8.GetBytes(mess);
-            bytes = managed.ComputeHash(bytes);
-            StringBuilder builder = new StringBuilder();
-            foreach (byte num in bytes)
-            {
-                builder.Append(num.ToString("x2").ToLower());
-            }
-            return builder.ToString().ToUpper();
-        }
-
         private void BtnXacNhan_Click(object sender, EventArgs e)
+        {
+            XacNhan();
+        }
+        private void XacNhan()
         {
             try
             {
@@ -152,7 +143,7 @@ namespace ChuKyDienTu
                         long[] numArray2 = new long[numArray.Length];
                         for (int j = 0; j < numArray.Length; j++)
                         {
-                            numArray2[j] = tinh1(numArray[j], E, N);
+                            numArray2[j] = tinh(numArray[j], E, N);
                             if (j < 90)
                             {
                                 progressBar.Value++;
@@ -165,7 +156,7 @@ namespace ChuKyDienTu
                         }
                         progressBar.Value = 0x5f;
                         bantomluoc1 = str3;
-                        bantomluoc2 = BamSHA(richEditControlVanBan.Text);
+                        bantomluoc2 = chuKyDienTu.BamSHA(richEditControlVanBan.Text);
                         progressBar.Value = 100;
                         if (bantomluoc1 != bantomluoc2)
                         {
@@ -190,6 +181,11 @@ namespace ChuKyDienTu
             {
                 MessageBox.Show("Chữ ký sai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
+        }
+        private void BtnLamMoi_Click(object sender, EventArgs e)
+        {
+            richEditControlVanBan.ResetText();
+            richTextBoxChuKy.ResetText();
         }
     }
 }

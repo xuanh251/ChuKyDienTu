@@ -202,6 +202,7 @@
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "FrmMain";
             this.Text = "Phần mềm tạo chữ ký điện tử - Nhóm 6 DT15CTT01 - Báo cáo học phần Bảo mật thông t" +

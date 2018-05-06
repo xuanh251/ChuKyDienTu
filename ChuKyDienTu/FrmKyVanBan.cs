@@ -6,13 +6,12 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using DevExpress.XtraEditors;
 
 namespace ChuKyDienTu
 {
     public partial class FrmKyVanBan : DevExpress.XtraEditors.XtraForm
     {
-        public string bantomluoc1 = "";
-        public string bantomluoc2 = "";
         private long D = 0L;
         private long E = 0L;
         private string fname = "";
@@ -24,31 +23,12 @@ namespace ChuKyDienTu
         public static string pass;
         private SaveFileDialog sfd = new SaveFileDialog();
         private SaveFileDialog sfd1 = new SaveFileDialog();
-
+        ChuKyDienTu chuKyDienTu = new ChuKyDienTu();
         public FrmKyVanBan()
         {
             InitializeComponent();
             textEditD.Text = Program.bienD;
             textEditN.Text = Program.bienN;
-        }
-
-        public long max(long a, long b)
-        {
-            if (a >= b)
-            {
-                return a;
-            }
-            return b;
-        }
-
-        public long nd(long a, long b)
-        {
-            long num2 = 1L;
-            while ((((num2 * b) + 1L) % a) != 0L)
-            {
-                num2 += 1L;
-            }
-            return (((num2 * b) + 1L) / a);
         }
 
         private void BtnTaiVanBan_Click(object sender, EventArgs e)
@@ -91,18 +71,7 @@ namespace ChuKyDienTu
             }
         }
 
-        public static string BamSHA(string mess)
-        {
-            SHA256Managed managed = new SHA256Managed();
-            byte[] bytes = Encoding.UTF8.GetBytes(mess);
-            bytes = managed.ComputeHash(bytes);
-            StringBuilder builder = new StringBuilder();
-            foreach (byte num in bytes)
-            {
-                builder.Append(num.ToString("x2").ToLower());
-            }
-            return builder.ToString().ToUpper();
-        }
+      
 
         public long ucln(long a, long b)
         {
@@ -127,26 +96,36 @@ namespace ChuKyDienTu
 
         private void BtnKyVanBan_Click(object sender, EventArgs e)
         {
+            KyVanBan();
+        }
+        private void KyVanBan()
+        {
             try
             {
                 DateTime now = DateTime.Now;
                 progressBar.Value = 0;
-                textEditSHA.Text = BamSHA(richEditControlVanBan.Text);
+                if (String.IsNullOrEmpty(richEditControlVanBan.Text))
+                {
+                    XtraMessageBox.Show("Bạn cần thêm văn bản cần ký", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                textEditSHA.Text = chuKyDienTu.BamSHA(richEditControlVanBan.Text);
                 if (Program.bienN != "")
                 {
                     int num5;
                     long a = Convert.ToInt64(Program.bienp);
                     long b = Convert.ToInt64(Program.bienq);
                     N = b * a;
-                    long num3 = (b - 1L) * (a - 1L);
-                    long num4 = max(a, b);
+                    long n = (b - 1L) * (a - 1L);//tinh ham so Ole n
+                    //tìm E là nguyên tố cùng nhau với n
+                    long num4 = chuKyDienTu.max(a, b);
                     E = num4 + 1L;
                     do
                     {
                         E += 1L;
                     }
-                    while (ucln(E, num3) != 1L);
-                    D = nd(E, num3);
+                    while (ucln(E, n) != 1L);
+                    D = chuKyDienTu.nd(E, n);
                     int[] numArray = new int[textEditSHA.Text.Length];
                     for (num5 = 0; num5 < textEditSHA.Text.Length; num5++)
                     {
@@ -169,20 +148,23 @@ namespace ChuKyDienTu
                     memoEditChuKy.Text = str;
                     TimeSpan span = DateTime.Now.Subtract(now);
                     progressBar.Value = 100;
-                    MessageBox.Show("Ký thành công!Thời gian thực hiện : " + span.Seconds.ToString() + "," + span.Milliseconds.ToString() + " gi\x00e2y.", "Th\x00f4ng b\x00e1o", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    XtraMessageBox.Show("Ký thành công!Thời gian thực hiện : " + span.Seconds.ToString() + "," + span.Milliseconds.ToString() + " gi\x00e2y.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Chưa ký được", "Thông báo");
+                    XtraMessageBox.Show("Chưa ký được", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message.ToString(), "Th\x00f4ng b\x00e1o");
+                XtraMessageBox.Show(exception.Message.ToString(), "Thông báo");
             }
         }
-
         private void BtnLuuChuKy_Click(object sender, EventArgs e)
+        {
+            LuuChuKy();
+        }
+        private void LuuChuKy()
         {
             try
             {
@@ -196,13 +178,23 @@ namespace ChuKyDienTu
                     writer.WriteLine(this.memoEditChuKy.Text);
                     writer.Flush();
                     writer.Close();
-                    MessageBox.Show("Bạn đã lưu chữ ký", "Thông báo");
+                    XtraMessageBox.Show("Bạn đã lưu chữ ký", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch
             {
-                MessageBox.Show("Có lỗi", "Thông báo");
+                MessageBox.Show("Có lỗi", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnLamMoi_Click(object sender, EventArgs e)
+        {
+            richEditControlVanBan.ResetText();
+            memoEditChuKy.ResetText();
+            textEditSHA.ResetText();
+            memoEditChuKy.ResetText();
+            textEditD.Text = Program.bienD;
+            textEditN.Text = Program.bienN;
         }
     }
 }

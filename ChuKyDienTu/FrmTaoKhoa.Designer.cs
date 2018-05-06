@@ -207,7 +207,7 @@
             // 
             // BtnTaoKhoa
             // 
-            this.BtnTaoKhoa.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton2.ImageOptions.Image")));
+            this.BtnTaoKhoa.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("BtnTaoKhoa.ImageOptions.Image")));
             this.BtnTaoKhoa.Location = new System.Drawing.Point(145, 96);
             this.BtnTaoKhoa.Name = "BtnTaoKhoa";
             this.BtnTaoKhoa.Size = new System.Drawing.Size(121, 36);
@@ -364,7 +364,7 @@
             // 
             // btnTaoSNT
             // 
-            this.btnTaoSNT.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btnTaoSNT.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnTaoSNT.ImageOptions.Image")));
             this.btnTaoSNT.Location = new System.Drawing.Point(299, 34);
             this.btnTaoSNT.Name = "btnTaoSNT";
             this.btnTaoSNT.Size = new System.Drawing.Size(124, 36);
@@ -469,6 +469,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(435, 262);
             this.Controls.Add(this.layoutControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmTaoKhoa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tạo cặp khoá";
