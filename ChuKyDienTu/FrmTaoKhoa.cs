@@ -54,14 +54,14 @@ namespace ChuKyDienTu
                 string path = null;
                 SaveFileDialog dialog = new SaveFileDialog
                 {
-                    Filter = "Khoá bảo mật(*.pvk)|*.pvk"
+                    Filter = "Khoá bí mật(*.pvk)|*.pvk"
                 };
                 if (dialog.ShowDialog()==DialogResult.OK)
                 {
                     path = dialog.FileName;
                     chuKyDienTu.SaveKey(keyManager, path);
+                    XtraMessageBox.Show("Đã lưu khoá bảo mật", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                XtraMessageBox.Show("Đã lưu khoá bảo mật", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception)
             {
@@ -88,8 +88,9 @@ namespace ChuKyDienTu
                 {
                     path = dialog.FileName;
                     chuKyDienTu.SaveKey(keyManager, path);
+                    XtraMessageBox.Show("Đã lưu khoá công khai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                XtraMessageBox.Show("Đã lưu khoá công khai", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
             }
             catch (Exception)
             {

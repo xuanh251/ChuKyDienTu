@@ -25,8 +25,6 @@ namespace ChuKyDienTu
         public FrmXacNhan()
         {
             InitializeComponent();
-            textEditN.Text = Program.bienN;
-            textEditE.Text = Program.bienE;
         }
 
         private void BtnTaiVanBan_Click(object sender, EventArgs e)
